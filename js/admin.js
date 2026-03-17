@@ -60,7 +60,7 @@ function setupNav() {
 
 // --- CATEGORIES ---
 async function loadCategories() {
-  const { data } = await supabase.from('categories').select('*').order('sort_order');
+  const { data } = await sb.from('categories').select('*').order('sort_order');
   categories = data || [];
   renderFieldTabs();
 }
@@ -70,7 +70,7 @@ const STATUS_LABELS = { new: 'Новая', in_progress: 'В работе', compl
 
 async function loadSubmissions() {
   const status = document.getElementById('filter-status').value;
-  let q = supabase.from('submissions').select('*, categories(name)').order('created_at', { ascending: false });
+  let q = sb.from('submissions').select('*, categories(name)').order('created_at', { ascending: false });
   if (status) q = q.eq('status', status);
   const { data } = await q;
   const body = document.getElementById('submissions-body');
@@ -98,7 +98,7 @@ async function loadSubmissions() {
 }
 
 async function updateStatus(id, status) {
-  await supabase.from('submissions').update({ status }).eq('id', id);
+  await sb.from('submissions').update({ status }).eq('id', id);
   showToast('Статус обновлён');
 }
 
@@ -137,7 +137,7 @@ function switchFieldTab(catId, btn) {
 }
 
 async function loadFields() {
-  const { data } = await supabase.from('form_fields').select('*').eq('category_id', currentCatId).order('sort_order');
+  const { data } = await sb.from('form_fields').select('*').eq('category_id', currentCatId).order('sort_order');
   renderFieldEditors(data || []);
 }
 
@@ -173,7 +173,7 @@ async function addField() {
 }
 
 async function editField(id) {
-  const { data } = await supabase.from('form_fields').select('*').eq('id', id).single();
+  const { data } = await sb.from('form_fields').select('*').eq('id', id).single();
   if (data) openFieldModal(data);
 }
 
@@ -230,9 +230,9 @@ async function saveField(id) {
     sort_order: parseInt(document.getElementById('ef-sort').value) || 0
   };
   if (id) {
-    await supabase.from('form_fields').update(payload).eq('id', id);
+    await sb.from('form_fields').update(payload).eq('id', id);
   } else {
-    await supabase.from('form_fields').insert(payload);
+    await sb.from('form_fields').insert(payload);
   }
   closeModal();
   loadFields();
@@ -241,14 +241,14 @@ async function saveField(id) {
 
 async function deleteField(id) {
   if (!confirm('Удалить это поле?')) return;
-  await supabase.from('form_fields').delete().eq('id', id);
+  await sb.from('form_fields').delete().eq('id', id);
   loadFields();
   showToast('Поле удалено');
 }
 
 // --- SETTINGS ---
 async function loadSettings() {
-  const { data } = await supabase.from('app_settings').select('*').eq('key', 'notifications').single();
+  const { data } = await sb.from('app_settings').select('*').eq('key', 'notifications').single();
   if (!data) return;
   const v = data.value;
   document.getElementById('tg-enabled').checked = v.telegram_enabled || false;
@@ -266,7 +266,7 @@ async function saveSettings() {
     email_enabled: document.getElementById('email-enabled').checked,
     email_to: document.getElementById('email-to').value.trim()
   };
-  await supabase.from('app_settings').update({ value }).eq('key', 'notifications');
+  await sb.from('app_settings').update({ value }).eq('key', 'notifications');
   showToast('Настройки сохранены');
 }
 
