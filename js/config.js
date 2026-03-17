@@ -24,11 +24,8 @@ if (!supabaseClient || typeof supabaseClient.from !== 'function') {
   console.error('Supabase client init failed: check @supabase/supabase-js loading and config values.');
 }
 
-// Backward-compatible globals for existing scripts:
-// - `window.supabase` is replaced with the initialized client
-// - `window.supabaseClient` is an explicit alias
+// Expose initialized client explicitly without overriding library namespace
 window.supabaseClient = supabaseClient;
-window.supabase = supabaseClient;
 
 // Toast notifications
 function showToast(msg, type = 'success') {

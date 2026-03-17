@@ -1,6 +1,11 @@
 // admin.js — Admin panel logic (skeleton)
 // Sections: submissions, fields, settings
 
+const supabase = window.supabaseClient;
+if (!supabase || typeof supabase.from !== 'function') {
+  console.error('Supabase client is not initialized correctly.');
+}
+
 let categories = [];
 let currentCatId = null;
 
