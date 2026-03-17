@@ -15,7 +15,20 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   console.error('Supabase configuration is missing. Set SUPABASE_URL and SUPABASE_ANON_KEY.');
 }
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseLib = window.supabase;
+const supabaseClient = (supabaseLib && typeof supabaseLib.createClient === 'function')
+  ? supabaseLib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
+if (!supabaseClient || typeof supabaseClient.from !== 'function') {
+  console.error('Supabase client init failed: check @supabase/supabase-js loading and config values.');
+}
+
+// Backward-compatible globals for existing scripts:
+// - `window.supabase` is replaced with the initialized client
+// - `window.supabaseClient` is an explicit alias
+window.supabaseClient = supabaseClient;
+window.supabase = supabaseClient;
 
 // Toast notifications
 function showToast(msg, type = 'success') {
