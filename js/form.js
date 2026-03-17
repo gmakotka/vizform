@@ -1,5 +1,10 @@
 // form.js — Dynamic form rendering and submission
 (function() {
+  const sb = window.supabaseClient;
+  if (!sb || typeof sb.from !== 'function') {
+    showToast('Ошибка конфигурации Supabase', 'error');
+    return;
+  }
   const params = new URLSearchParams(location.search);
   const catSlug = params.get('cat');
   if (!catSlug) { location.href = 'index.html'; return; }
@@ -12,13 +17,13 @@
 
   async function loadForm() {
     // Get category
-    const { data: cat } = await supabase
+    const { data: cat } = await sb
       .from('categories').select('*').eq('slug', catSlug).single();
     if (!cat) { location.href = 'index.html'; return; }
     categoryId = cat.id;
 
     // Get fields
-    const { data: flds } = await supabase
+    const { data: flds } = await sb
       .from('form_fields').select('*').eq('category_id', cat.id).order('sort_order');
     fields = flds || [];
 
@@ -144,7 +149,7 @@
       status: 'new'
     };
 
-    const { error } = await supabase.from('submissions').insert(submission);
+    const { error } = await sb.from('submissions').insert(submission);
     if (error) {
       showToast('Ошибка при отправке: ' + error.message, 'error');
       btn.disabled = false; btn.textContent = 'Отправить заявку';
@@ -196,7 +201,7 @@
 
   async function sendNotification(sub) {
     try {
-      const { data: settings } = await supabase
+      const { data: settings } = await sb
         .from('app_settings').select('value').eq('key', 'notifications').single();
       if (!settings) return;
       const cfg = settings.value;
@@ -212,7 +217,7 @@
 
       if (cfg.email_enabled && cfg.email_to) {
         // Email via Supabase Edge Function (optional, user must deploy)
-        supabase.functions.invoke('send-email', {
+        sb.functions.invoke('send-email', {
           body: { to: cfg.email_to, subject: 'Новая заявка на визуализацию', data: sub }
         }).catch(() => {});
       }
