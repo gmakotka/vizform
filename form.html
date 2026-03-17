@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VizForm — Заполнение заявки</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="data:image/png;base64,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">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="header__logo">Viz<span>Form</span></a>
+      <nav class="header__nav">
+        <button class="theme-toggle" onclick="toggleTheme()" title="Сменить тему">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container container--narrow">
+    <!-- Form Header -->
+    <div class="form-header" id="form-header">
+      <button class="form-header__back" onclick="location.href='index.html'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <h1 class="form-header__title">Заявка на визуализацию</h1>
+      <span class="form-header__cat" id="cat-badge"></span>
+    </div>
+
+    <!-- Dynamic Form -->
+    <form id="viz-form" class="form-body" novalidate>
+      <div id="fields-container">
+        <p class="text-muted">Загрузка полей...</p>
+      </div>
+
+      <!-- Contact info -->
+      <div class="contact-section">
+        <h3 class="contact-section__title">Контактная информация</h3>
+        <div class="field">
+          <label class="field__label">Ваше имя <span class="req">*</span></label>
+          <input type="text" class="field__input" id="submitter_name" placeholder="Иван Иванов" required>
+          <div class="field__error">Укажите имя</div>
+        </div>
+        <div class="field">
+          <label class="field__label">Email <span class="req">*</span></label>
+          <input type="email" class="field__input" id="submitter_email" placeholder="ivan@company.com" required>
+          <div class="field__error">Укажите корректный email</div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--block" id="submit-btn">
+        Отправить заявку
+      </button>
+    </form>
+
+    <!-- Success Screen -->
+    <div id="success-screen" class="success-screen hidden">
+      <div class="success-screen__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <h2 class="success-screen__title">Заявка отправлена!</h2>
+      <p class="success-screen__text">Мы получили ваше техническое задание и свяжемся с вами в ближайшее время.</p>
+      <a href="index.html" class="btn btn--outline">Вернуться на главную</a>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/form.js"></script>
+  <script>
+function toggleTheme(){const h=document.documentElement,c=h.getAttribute('data-theme'),n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('vizform_theme',n)}
+(function(){const s=localStorage.getItem('vizform_theme');if(s==='dark'||(!s&&window.matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark')})();
+</script>
+</body>
+</html>
