@@ -1,5 +1,10 @@
 // form.js — Dynamic form rendering and submission
 (function() {
+  const supabase = window.supabaseClient;
+  if (!supabase || typeof supabase.from !== 'function') {
+    showToast('Ошибка конфигурации Supabase', 'error');
+    return;
+  }
   const params = new URLSearchParams(location.search);
   const catSlug = params.get('cat');
   if (!catSlug) { location.href = 'index.html'; return; }
