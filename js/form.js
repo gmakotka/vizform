@@ -1,7 +1,7 @@
 // form.js — Dynamic form rendering and submission
 (function() {
-  const sb = window.supabaseClient;
-  if (!sb || typeof sb.from !== 'function') {
+  const supabase = window.supabaseClient;
+  if (!supabase || typeof supabase.from !== 'function') {
     showToast('Ошибка конфигурации Supabase', 'error');
     return;
   }

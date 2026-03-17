@@ -1,8 +1,8 @@
 // admin.js — Admin panel logic (skeleton)
 // Sections: submissions, fields, settings
 
-const sb = window.supabaseClient;
-if (!sb || typeof sb.from !== 'function') {
+const supabase = window.supabaseClient;
+if (!supabase || typeof supabase.from !== 'function') {
   console.error('Supabase client is not initialized correctly.');
 }
 
